@@ -76,3 +76,8 @@ window.addEventListener('DOMContentLoaded', () => {
    }
    createPerson(currentPerson);
  });
+
+ randomButton.addEventListener('click', () => {
+   currentPerson = Math.floor(Math.random() * reviews.length);
+   createPerson(currentPerson);
+ })

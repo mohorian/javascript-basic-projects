@@ -1,35 +1,25 @@
 const value = document.getElementById('value');
-const decreaseButton = document.querySelector('.decrease');
-const resetButton = document.querySelector('.reset');
-const increaseButton = document.querySelector('.increase');
+const buttons = document.querySelectorAll('.btn');
 
 let counter = 0;
 
-function changeColor(counter) {
-    if (counter < 0) {
-        color = 'red';
-    } else if (counter > 0) {
-        color = 'green';
-    } else if (counter === 0) {
-        color = 'rgb(16, 42, 66)';
-    }
-    return color
-}
-
-decreaseButton.addEventListener('click', () => {
-    counter += -1
-    value.textContent = counter;
-    value.style.color = changeColor(counter);
-})
-
-resetButton.addEventListener('click', () => {
-    counter = 0
-    value.textContent = counter;
-    value.style.color = changeColor(counter);
-})
-
-increaseButton.addEventListener('click', () => {
-    counter += 1
-    value.textContent = counter;
-    value.style.color = changeColor(counter);
-})
+buttons.forEach((button) => {
+    button.addEventListener('click', (evt) => {
+        const styles = evt.currentTarget.classList;
+        if (styles.contains('decrease')) {
+            counter--;
+        } else if (styles.contains('increase')) {
+            counter++;
+        } else {
+            counter = 0;
+        }
+        if (counter < 0) {
+            value.style.color = 'red';
+        } else if (counter > 0) {
+            value.style.color = 'green';
+        } else if (counter === 0) {
+            value.style.color = 'rgb(16, 42, 66)';
+        }
+        value.textContent = counter;
+    });
+});

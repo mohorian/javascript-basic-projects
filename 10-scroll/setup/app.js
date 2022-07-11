@@ -4,10 +4,51 @@
 //offsetTop - A Number, representing the top position of the element, in pixels
 
 // ********** set date ************
-
+const date = document.getElementById('date');
+date.textContent = new Date().getFullYear();
 // ********** close links ************
+const toggleButton = document.querySelector('.nav-toggle');
+const linksContainer = document.querySelector('.links-container');
 
+toggleButton.addEventListener('click', () => {
+    linksContainer.classList.toggle('show-links');
+});
 // ********** fixed navbar ************
+const navbar = document.getElementById('nav');
+const topLink = document.querySelector('.top-link');
 
+window.addEventListener('scroll', () => {
+    const scrollHeight = window.scrollY;
+    const navbarHeight = navbar.getBoundingClientRect().height;
+    if (scrollHeight > navbarHeight) {
+        navbar.classList.add('fixed-nav');
+    } else {
+        navbar.classList.remove('fixed-nav');
+    };
+
+    if (scrollHeight > 500) {
+        topLink.classList.add('show-link');
+    } else {
+        topLink.classList.remove('show-link');
+    }
+});
 // ********** smooth scroll ************
-// select links
+const scrollLinks = document.querySelectorAll('.scroll-link');
+const fixedNavbarHeight = navbar.getBoundingClientRect().height;
+
+scrollLinks.forEach((link) => {
+    link.addEventListener('click', (evt) => {
+        evt.preventDefault();
+        linksContainer.classList.remove('show-links');
+        const id = link.getAttribute('href').slice(1);
+        const section = document.getElementById(id);
+        let position = section.offsetTop;
+        if (!navbar.classList.contains('fixed-nav')) {
+            position += - navbar.getBoundingClientRect().height - fixedNavbarHeight;
+        } else {
+            position += - fixedNavbarHeight;
+        };
+        window.scrollTo(0, position);
+    })
+})
+
